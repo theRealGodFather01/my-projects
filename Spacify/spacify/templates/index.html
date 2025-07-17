@@ -1,0 +1,71 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Spacify | Welcome</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="{% static 'css/bulma.min.css' %}">
+  </head>
+  <body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="#">
+          <img src="{% static 'images/spacify  logo.png' %}" width="43" height="0"><p class="subtitle is-5">Spacify</p>
+        </a>
+    
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+    
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+              <a href="{% url 'signup' %}" class="button is-primary">
+                <strong>Sign up</strong>
+              </a>
+              <a href="{% url 'login' %}" class="button is-primary">
+                <strong>Log in</strong>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  <section class="section">
+    <div class="container">
+      <div class="card">
+        <div class="card-content">
+          <p class="title">
+            “There are three hard things in computer science: cache invalidation, naming things, and off-by-one errors.”
+          </p>
+          <p class="subtitle">
+            Jeff Atwood
+          </p>
+        </div>
+      </div>
+      
+      <div class="columns is-mobile is-centered">
+        <div class="column is-half">
+          <div class="card">
+            <div class="card-content">
+              <p class="title">
+                Here at spacify we cross the T's and dot the I's while connecting you to the latest, trending and your loved ones
+              </p>
+              <p class="subtitle">
+                Enter into a world of great posibilities, signup to get an experience or login to continue your experience
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  </body>
+</html>

@@ -1,0 +1,131 @@
+/* Make sure html and body fill the full viewport height */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    overflow-y: scroll;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 1em;
+    text-align: center;
+    top: 0vh;
+    position: relative;
+}
+
+nav {
+    background-color: #444;
+    color: #fff;
+    padding: 0.5em;
+    text-align: center;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 1em;
+}
+
+nav a.active {
+    background-color: #fff;
+    color: #007bff;
+}
+
+/* Flexbox container to push footer to bottom */
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Main content takes up available space */
+main {
+    padding: 1em;
+    flex: 1; /* Makes main grow and push footer down */
+}
+
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 1em;
+    text-align: center;
+}
+
+.chat-icon {
+    position: fixed;
+    bottom: 60px;
+    right: 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    padding: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Chatbox styles */
+.chatbox-container {
+    display: none;
+    position: fixed;
+    opacity: 0;
+    bottom: 45px;
+    right: 20px;
+    width: 300px;
+    height: 400px;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    transition: opacity 0.5s ease-in-out 0.9s;
+    overflow: hidden; /* Added to hide overflow content */
+}
+
+.chatbox-header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    cursor: pointer;
+}
+
+.chatbox-content {
+    padding: 15px;
+    overflow-y: auto;
+    opacity: 0;
+    max-height: 270px;
+    transition: opacity 0.5s ease-in-out 0.9s;
+}
+
+.chatbox-input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    position: absolute;
+    box-sizing: border-box;
+    bottom: 10px; /* Adjusted margin to prevent moving downwards */
+    overflow: hidden; /* Added to hide overflow content */
+}
+
+.chatbox-send-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 11px;
+    border-radius: 5px;
+    cursor: pointer;
+    position: absolute;
+    right: 10px; /* Adjusted margin to prevent moving downwards */
+    bottom: 19px; /* Adjusted margin to prevent moving downwards */
+}

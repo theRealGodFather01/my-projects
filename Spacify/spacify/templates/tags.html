@@ -1,0 +1,119 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Spacify | Tags</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="{% static '/css/bulma.min.css' %}">
+  </head>
+  <body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="#">
+          <img src="{% static '/images/spacify  logo.png' %}" width="43" height="0"><p class="subtitle is-5">Spacify</p>
+        </a>
+    
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+    
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a href="{% url 'dashboard' %}" class="navbar-item">
+            <i class="material-icons">home</i>
+            &nbsp; Home
+          </a>
+    
+          <a class="navbar-item">
+            <i class="material-icons">explore</i>
+            &nbsp; Explore
+          </a>
+    
+          <a class="navbar-item">
+            <i class="material-icons">notifications</i>
+            &nbsp; Notifications
+          </a>
+    
+          <a href="/messages" class="navbar-item">
+            <i class="material-icons">message</i>
+            &nbsp; Messages
+          </a>
+    
+          <a href="{% url 'profile' request.user %}" class="navbar-item">
+            <i class="material-icons">person</i>
+            &nbsp; {% if user.is_authenticated and user != post.user %}My {% endif %} Profile
+          </a>
+    
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              <i class="material-icons">settings</i>
+              &nbsp; Settings
+            </a>
+    
+            <div class="navbar-dropdown">
+              <a class="navbar-item">
+                <i class="material-icons">pin</i>
+                &nbsp; Change password
+              </a>
+              <a class="navbar-item">
+                <i class="material-icons">contact_mail</i>
+                &nbsp; Contact
+              </a>
+              <a class="navbar-item">
+                <i class="material-icons">report</i>
+                &nbsp; Report an issue
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <p class=" is-secondary" style="margin-right: 217px; position: relative;">
+              <strong>Welcome - {{ request.user }}</strong>
+            </p>
+            <div class="buttons">
+              <a href="{% url 'logout' %}" class="button is-primary">
+                <i class="material-icons">logout</i>
+                <strong>Log out</strong>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <section class="hero is-primary">
+        <div class="hero-body">
+          <p class="title">
+            #Tags
+          </p>
+          <p class="subtitle is-4">
+            #{{ tag.title }}
+          </p>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+          <div class="columns is-mobile is-multiline is-centered">
+            {% for post in posts %}
+              <div class="column is-one-quarter">
+                <div class="box">
+                  <figure class="image is-128x128">
+                    <a href="{{ post.get_absolute_url }}"><img src="{{ post.picture.url }}" style="position: relative; width: 128px; height: 128px;" alt="Image"></a>
+                  </figure>
+                  <p>{% for tag in post.tags.all %} <a href="{{ tag.get_absolute_url }}">#{{ tag }}</a>{% endfor %}</p>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        <br>
+        <br>
+    </section>
+  </body>
+</html>

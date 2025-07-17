@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script src="{% static 'app.js' %}"  defer></script>
+    <title>University Of Uyo</title>
+</head>
+<body>
+    <div class="page-container">
+        <header>
+            <h1>University Of Uyo</h1>
+        </header>
+
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Programs</a>
+            <a href="#">Admissions</a>
+            <a href="#">About Us</a>
+            <a href="#">Contact</a>
+        </nav>
+
+        <main>
+            <h2>Welcome to University of Uyo</h2>
+            <p>Explore our programs and discover a world of opportunities.</p>
+        </main>
+
+        <!-- Chat Icon and Chatbox -->
+        <div class="chat-icon" onclick="toggleChatbox()">&#x1F4AC;</div>
+        <div class="chatbox-container" id="chatbox">
+            <div class="chatbox-header" onclick="toggleChatbox()">StuBot &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; click here to close box</div>
+            <div class="chatbox-content" id="chatbox-content">
+                <p><strong>StuBot:</strong> Hello! I'm StuBot. <br> Please enter your email:</p>
+            </div>
+            <input type="text" class="chatbox-input" placeholder="Type your message...">
+            <button class="chatbox-send-btn" onclick="sendMessage()">Send</button>
+        </div>
+
+        <footer>
+            <p>&copy; <span id="year"></span> University of Uyo. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+
+</html>

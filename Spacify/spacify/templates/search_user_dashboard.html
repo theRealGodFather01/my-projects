@@ -1,0 +1,147 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Spacify | New Message</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="{% static '/css/bulma.min.css' %}">
+  </head>
+  <body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="#">
+          <img src="{% static 'images/spacify  logo.png' %}" width="43" height="0"><p class="subtitle is-5">Spacify</p>
+        </a>
+    
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+    
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a href="{% url 'dashboard' %}" class="navbar-item">
+            <i class="material-icons">home</i>
+            &nbsp; Home
+          </a>
+    
+          <a class="navbar-item">
+            <i class="material-icons">explore</i>
+            &nbsp; Explore
+          </a>
+    
+          <a class="navbar-item">
+            <i class="material-icons">notifications</i>
+            &nbsp; Notifications
+          </a>
+    
+          <a href="/messages" class="navbar-item">
+            <i class="material-icons">message</i>
+            &nbsp; Messages
+          </a>
+    
+          <a href="{% url 'profile' request.user %}" class="navbar-item">
+            <i class="material-icons">person</i>
+            &nbsp; {% if user.is_authenticated and user == request.user %}My {% endif %} {% if user.is_authenticated and user != request.user %}{{ profile.user }}'s {% endif %} Profile
+          </a>
+    
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              <i class="material-icons">settings</i>
+              &nbsp; Settings
+            </a>
+    
+            <div class="navbar-dropdown">
+              <a class="navbar-item">
+                <i class="material-icons">pin</i>
+                &nbsp; Change password
+              </a>
+              <a class="navbar-item">
+                <i class="material-icons">contact_mail</i>
+                &nbsp; Contact
+              </a>
+              <a class="navbar-item">
+                <i class="material-icons">report</i>
+                &nbsp; Report an issue
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <p class=" is-secondary" style="margin-right: 217px; position: relative;">
+              <strong>Welcome - {{ request.user }}</strong>
+            </p>
+            <div class="buttons">
+              <a href="{% url 'logout' %}" class="button is-primary">
+                <i class="material-icons">logout</i>
+                <strong>Log out</strong>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  <section class="section">
+    <div class="container">
+      <div class="columns is-mobile">
+        <div class="column is-one-quarter">
+          <aside class="menu">
+            <h1 class="menu-label title is-4">
+              Messages
+            </h1>
+            <ul style="overflow-y: scroll; height: 403px;" class="menu-list">
+                <li>
+                    <div class="media">
+                        <div class="media-left">
+                            <div class="control">
+                                <form>
+                                    <input type="text" name="q" placeholder="Search users......" class="input" value="{{ request.GETT.q }}">
+                                    <div class="columns is-mobile is-centered" style="margin-top: 7px;">
+                                        <button type="submit" class="button is-success">
+                                            Search
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+              {% for user in users %}
+                <li class="media-left column is-quarter is-hoverable" style="margin-top: 10px; margin-left: -10px;">
+                    <div class="is-mobile is-centered">
+                        <div class="box">
+                          <article class="media">
+                            <div class="media-left">
+                              <figure class="image is-64x64">
+                                <img src="{{ user.profile.picture.url }}" alt="Image">
+                              </figure>
+                            </div>
+                            <div class="media-content">
+                              <div class="content">
+                                <p>
+                                  <strong>{{ user.profile.first_name }} {{ user.profile.last_name }}</strong> <small>@{{ user.username }}</small>
+                                </p> 
+                              </div>
+                            </div>
+                            <div class="content" style="margin-left: -150px; margin-top: 50px;">
+                                <a href="" class="column media-left button is-info" style="border-radius: 10px;">Send a message</a>
+                            </div>
+                          </article>
+                        </div>
+                    </div>
+                </li>
+              {% endfor %}
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </section>
+  </body>
+</html>

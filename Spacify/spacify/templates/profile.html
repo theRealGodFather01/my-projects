@@ -1,0 +1,185 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Spacify | Profile</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="{% static '/css/bulma.min.css' %}">
+  </head>
+  <body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="#">
+          <img src="{% static '/images/spacify  logo.png' %}" width="43" height="0"><p class="subtitle is-5">Spacify</p>
+        </a>
+    
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+    
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a href="{% url 'dashboard' %}" class="navbar-item">
+            <i class="material-icons">home</i>
+            &nbsp; Home
+          </a>
+    
+          <a class="navbar-item">
+            <i class="material-icons">explore</i>
+            &nbsp; Explore
+          </a>
+    
+          <a class="navbar-item">
+            <i class="material-icons">notifications</i>
+            &nbsp; Notifications
+          </a>
+    
+          <a href="/messages" class="navbar-item">
+            <i class="material-icons">message</i>
+            &nbsp; Messages
+          </a>
+    
+          <a href="{% url 'profile' request.user %}" class="navbar-item">
+            <i class="material-icons">person</i>
+            &nbsp; {% if user.is_authenticated and user == request.user %}My {% endif %} Profile
+          </a>
+    
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              <i class="material-icons">settings</i>
+              &nbsp; Settings
+            </a>
+    
+            <div class="navbar-dropdown">
+              <a class="navbar-item">
+                <i class="material-icons">pin</i>
+                &nbsp; Change password
+              </a>
+              <a class="navbar-item">
+                <i class="material-icons">contact_mail</i>
+                &nbsp; Contact
+              </a>
+              <a class="navbar-item">
+                <i class="material-icons">report</i>
+                &nbsp; Report an issue
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <p class=" is-secondary" style="margin-right: 230px; position: relative;">
+              <strong>Welcome - {{ request.user }}</strong>
+            </p>
+            <div class="buttons" style="margin-left: -150px; position: relative;">
+              {% if user.is_authenticated and user == request.user %} 
+              <a href="{% url 'newpost' %}" class="button is-light">
+                <i class="material-icons">add_circle</i>
+                <strong>New post</strong>
+              </a>
+              {% endif %}
+              <a href="{% url 'logout' %}" class="button is-primary">
+                <i class="material-icons">logout</i>
+                <strong>Log out</strong>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <section class="section">
+      <div class="container">
+          <div class="media">
+              <div class="media-left">
+                  <figure class="image is-256x256">
+                    {% if profile.picture %}
+                    <img class="is-rounded" src="{{ profile.picture.url }}" style="width: 256px; height: 256px;">
+                    {% else %}
+                    <img class="is-rounded" src="{{ profile.picture.default }}" style="width: 256px; height: 256px;">
+                    {% endif %}
+                  </figure>
+              </div>
+              <div class="media-content" style="margin: 70px 3px;">
+                  <h2 class="title is-2" style="font-weight: bold;">{{ profile.first_name }} {{ profile.last_name }}</h2>
+                  <h3 class="subtitle is-3">@{{ profile.user }}</h3>
+              </div>
+              <div class="container" style="margin: 90px 30px;">
+                <div class="media-content">
+                  <nav class="level is-mobile">
+                    <div class="level-item has-text-centered">
+                      <div>
+                        <p class="heading">Posts</p>
+                        <p class="title">{{ posts_count }}</p>
+                      </div>
+                    </div>
+                    <div class="level-item has-text-centered">
+                      <div>
+                        <p class="heading">Following</p>
+                        <p class="title">{{ following_count }}</p>
+                      </div>
+                    </div>
+                    <div class="level-item has-text-centered">
+                      <div>
+                        <p class="heading">Followers</p>
+                        <p class="title">{{ followers_count }}</p>
+                      </div>
+                    </div>
+                  </nav>
+                </div>
+              </div>
+              {% if user.is_authenticated and user != profile.user  %}
+                <div class="media-right" style="margin: 190px 0px 0px 1130px; position: absolute;">
+                  {% if follow_status == True %}
+                    <a href="{% url 'follow' profile.user 0 %}" class="button is-danger">Unfollow</a>
+                  {% else %}
+                    <a href="{% url 'follow' profile.user 1 %}" class="button is-success">Follow</a>
+                  {% endif %}
+                </div>
+              {% endif %}
+          </div>
+          <div class="column is-half" style="margin: -40px 0px 10px 260px; position: relative;">
+              <p class="subtitle is-6">{% if profile.bio %}{{ profile.bio }}{% else %}Just keep it simple{% endif %}</p>
+          </div>
+          {% if user.is_authenticated and user == profile.user %}
+            <a href="{% url 'edit-profile' %}" class="button" style="margin: -5px 0px 0px 260px; position: relative;">
+              <i class="material-icons">edit</i>
+              Edit profile
+            </a>
+          {% endif %}
+      </div>
+      <div class="tabs is-centered"  style="margin: 100px 0px 30px 0px; position: relative;">
+        <ul>
+            <li class="{% if url_name == 'profile' %}is-active {% endif %}"><a href="{% url 'profile' profile.user %}"><i class="material-icons">dashboard</i>Posts</a></li>
+            <li class="{% if url_name == 'savedposts' %}is-active {% endif %}"><a href="{% url 'savedposts' profile.user %}"><i class="material-icons">save_alt</i>Saved</a></li>
+        </ul>
+      </div>
+    </section>
+    <section class="section" style="margin: -90px 0px 0px 0px; position: relative;">
+      {% for post in posts %}
+        <div class="container">
+          <div class="columns is-mobile is-multiline is-centered">
+              <div class="column is-one-quarter">
+                  <div class="box">
+                      <figure class="image is-256x256" style="position: relative;">
+                        <a href="{{ post.get_absolute_url }}">
+                          <img src="{{ post.picture.url }}" alt="Image">
+                        </a>
+                      </figure>
+                  </div>
+              </div>
+          </div>
+        </div>
+      {% empty %}
+        <p style="position: relative; display: flex; justify-content: center; align-items: center; font-weight: bold; margin: auto;">No available posts</p>
+      {% endfor %}
+    </section>
+    <br>
+    <br>
+  </body>
+</html>

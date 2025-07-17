@@ -1,0 +1,162 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Spacify | My Dashboard</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="{% static '/css/bulma.min.css' %}">
+  </head>
+  <body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="#">
+          <img src="{% static 'images/spacify  logo.png' %}" width="43" height="0"><p class="subtitle is-5">Spacify</p>
+        </a>
+    
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+    
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a href="{% url 'dashboard' %}" class="navbar-item">
+            <i class="material-icons">home</i>
+            &nbsp; Home
+          </a>
+    
+          <a class="navbar-item">
+            <i class="material-icons">explore</i>
+            &nbsp; Explore
+          </a>
+    
+          <a class="navbar-item">
+            <i class="material-icons">notifications</i>
+            &nbsp; Notifications
+          </a>
+          
+          <a href="/messages" class="navbar-item">
+            <i class="material-icons">message</i>
+            &nbsp; Messages
+          </a>
+    
+          <a href="{% url 'profile' request.user %}" class="navbar-item">
+            <i class="material-icons">person</i>
+            &nbsp; {% if user.is_authenticated and user == request.user %}My {% endif %} {% if user.is_authenticated and user != request.user %}{{ profile.user }}'s {% endif %} Profile
+          </a>
+    
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              <i class="material-icons">settings</i>
+              &nbsp; Settings
+            </a>
+    
+            <div class="navbar-dropdown">
+              <a class="navbar-item">
+                <i class="material-icons">pin</i>
+                &nbsp; Change password
+              </a>
+              <a class="navbar-item">
+                <i class="material-icons">contact_mail</i>
+                &nbsp; Contact
+              </a>
+              <a class="navbar-item">
+                <i class="material-icons">report</i>
+                &nbsp; Report an issue
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <p class=" is-secondary" style="margin-right: 80px; position: relative;">
+              <strong>Welcome - {{ request.user }}</strong>
+            </p>
+            <div class="buttons">
+              <a href="{% url 'newpost' %}" class="button is-light">
+                <i class="material-icons">add_circle</i>
+                <strong>New post</strong>
+              </a>
+              <a href="{% url 'logout' %}" class="button is-primary">
+                <i class="material-icons">logout</i>
+                <strong>Log out</strong>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <section class="section">
+      <div class="container">
+        <div class="columns is-mobile is-centered">
+          <div class="column is-half">
+            {% for post_item in post_items %}
+              <div class="card">
+                <a href="{{ post_item.get_absolute_url }}">
+                  <div class="card-image">
+                    <figure class="image is-4by3">
+                      <img src="{{ post_item.picture.url }}" alt="Placeholder image">
+                    </figure>
+                  </div>
+                </a>
+                <div class="card-content">
+                  <div class="media">
+                    <div class="media-left">
+                      <a href="{% url 'profile' post_item.user.username %}">
+                      <figure class="image is-48x48">
+                        <img class=" is-rounded"  src="{{ post_item.user.profile.picture.url }}" alt="Placeholder image">
+                      </figure>
+                      </a>
+                    </div>
+                    <div class="media-content">
+                      <a href="{% url 'profile' post_item.user.username %}">
+                      <p class="title is-4">{{post_item.user.profile.first_name}} {{post_item.user.profile.last_name}}</p>
+                      <p class="subtitle is-6">@{{ post_item.user.username }}</p>
+                      </a>
+                      <div class="media-content">
+                        <div class="content">
+                          <b>{{ post_item.caption }}</b>
+                          <p>{% for tag in post_item.tags.all %} <a href="{{ tag.get_absolute_url }}">#{{ tag }}</a>{% endfor %}</p>
+                        </div>
+                        <div class="content">
+                          <div class="media-content">
+                            <div class="media-left">
+                              <strong><small><time datetime="2016-1-1">{{ post_item.posted }}</time></small></strong>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="media-right">
+                      <p >
+                        <i class="material-icons has-text-danger">favorite</i>
+                        {{ post_item.likes }}
+                        {% if post_item.likes == 0  %}
+                          Likes
+                        {% elif post_item.likes == 1 %}
+                          Like
+                        {% else %}
+                          likes
+                        {% endif %}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <br>
+              <br>
+              <br>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
