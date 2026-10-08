@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "85632166352",
+    "project_id": "servelink-app2",
+    "storage_bucket": "servelink-app2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:85632166352:android:bd23af20ec3492fcaf71d5",
+        "android_client_info": {
+          "package_name": "com.acetech.serve_link"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_62MyKw2NSwWpGAnSMMQpaZ1GRTz671g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
